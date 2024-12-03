@@ -1,0 +1,126 @@
+
+/**
+Author: Anna Balabushko
+Module 08: Assignment - Chapter 6, Part I
+Create a program that will simulate creating a personal check based on user input **/
+
+import java.util.Scanner;
+
+public class CheckProducer2 {
+
+   public String generateCheck(int checkNumber, String payeeName, double dollarAmount) {
+   String str = "";
+   str = String.format("Payee Name: %s, Check Number: %d, Amount: %.2f (%s)", payeeName, checkNumber, dollarAmount, amountToWord(dollarAmount));
+   return str;
+}
+
+public String amountToWord(double dollarAmount) {
+
+   String s = String.valueOf(dollarAmount);
+   int indexOfDecimal = s.indexOf(".");
+   char h = s.charAt(0);
+   char t = s.charAt(1);
+   char o = s.charAt(2);
+     
+   double doubleNumber = dollarAmount;
+   String doubleAsString = String.valueOf(doubleNumber);
+   indexOfDecimal = doubleAsString.indexOf(".");
+
+
+   int number = (int) dollarAmount;
+   
+   String beforeDecimal = numberToWord(String.valueOf(number).toCharArray());
+   String stringAmount = String.valueOf(dollarAmount);
+   String afterDecimal = stringAmount.substring(stringAmount.lastIndexOf(".") + 1);
+   String one_zero = "1";
+   for (int i = 0; i < afterDecimal.length(); i++) {
+      one_zero += "0";
+   }
+   afterDecimal = afterDecimal + "/" + one_zero;
+   return beforeDecimal + " and " + afterDecimal;
+}
+
+public String numberToWord(char[] number) {
+
+   int length = number.length;
+   
+   if (length == 0) {
+      System.out.println("empty string");
+      return "";
+   }
+   if (length > 4) {
+      System.out.println("Length more than 4 is not supported");
+      return "";
+   }
+
+   String[] single_digit = new String[]{ "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
+
+   String[] two_digit = new String[]{ "", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+   
+   String[] multiple_10 = new String[]{"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
+   String[] power_10 = new String[]{"Hundred", "Thousand"};
+
+   String value = "";
+
+   if (length == 1) {
+      return single_digit[number[0] - '0'];
+   }
+
+   int x = 0;
+   while (x < number.length) {
+
+   if (length >= 3) {
+      if (number[x] - '0' != 0) {
+       value += single_digit[number[x] - '0'] + " " + power_10[length - 3] + " and ";
+   }
+   --length;
+   } else {
+
+   if (number[x] - '0' == 1) {
+      int sum = number[x] - '0' + number[x + 1] - '0';
+
+      value += two_digit[sum];
+      return value;
+   } else if (number[x] - '0' == 2 && number[x + 1] - '0' == 0) {
+
+      value = "Twenty";
+      return value;
+   } else {
+   int i = (number[x] - '0');
+   if (i > 0) {
+
+   value += multiple_10[i] + "-";
+   } else {
+      System.out.print("");
+   }
+   ++x;
+   if (number[x] - '0' != 0) {
+
+      value += single_digit[number[x] - '0'];
+   }
+   }
+   }
+   ++x;
+   }
+   return value;
+   }
+
+public static void main(String[] args) {
+   CheckProducer2 ck = new CheckProducer2();
+
+   Scanner keyboard = new Scanner(System.in);
+
+
+   System.out.println("Enter Payee Name:");
+   String payeeName = keyboard.nextLine();
+   System.out.println("Enter Check Number:");
+   int checkNumber = keyboard.nextInt();
+
+   System.out.println("Enter check Amount:");
+   double dollarAmount = keyboard.nextDouble();
+
+
+System.out.println(ck.generateCheck(checkNumber, payeeName, dollarAmount));
+}
+}
