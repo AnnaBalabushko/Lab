@@ -1,0 +1,81 @@
+/*
+Author: Anna Balabushko
+Module 12: Assignment - Review Assignment
+Create a set of classes from scratch that work together to simulate an organization providing technology certifications
+*/
+
+import java.util.Scanner;
+
+public class Certificate{
+
+   public static void main(String[] args){
+
+   Assessor assessor = new Assessor();
+   CertificationTest test = new CertificationTest("Anna Balabushko","annabalabushko@gmail.com",75);
+   CertificationCriteria criteria = new CertificationCriteria("Java Programming",60);
+
+   assessor.verifyCertificate(test,criteria);
+   }
+}
+
+
+class Assessor{
+   private String name = "";
+   private String id = "";
+   
+   Scanner keyboard = new Scanner(System.in);
+   
+   public Assessor(){
+      System.out.println("Enter your name:");
+      this.name = keyboard.nextLine();
+      System.out.println("Enter your id:");
+      this.id = keyboard.nextLine();
+     
+   }
+   
+   public String getName(){return this.name;}
+   public String getId(){return this.id;}
+   public void verifyCertificate(CertificationTest test,CertificationCriteria criteria){
+   
+      if(test.getTestScore() < criteria.getPassingScore()){
+         System.out.println("Not eligible for certification.");}
+      else{
+         System.out.println("Certificate:");
+         System.out.println("Certification name: "+criteria.getTestName());
+         System.out.println("Recipient's name: "+test.getName());
+         System.out.println("Recipient's email: "+test.getEmail());
+         System.out.println("Assessor's name: "+this.name);
+         System.out.println("Assessor's id: "+this.id);
+         }
+      }
+}
+
+class CertificationCriteria{
+
+   private String testName;
+   private int passingScore;
+
+   public CertificationCriteria(String testName,int passingScore){
+      this.testName=testName;
+      this.passingScore=passingScore;
+   }
+
+   public String getTestName(){return this.testName;}
+   public int getPassingScore(){return this.passingScore;}
+}
+
+
+class CertificationTest{
+   private String name,email;
+   private int testScore;
+
+   public CertificationTest(String name,String email,int testScore){
+   this.name=name;
+   this.email=email;
+   this.testScore=testScore;
+   }
+
+   public String getName(){return this.name;}
+   public String getEmail(){return this.email;}
+   public int getTestScore(){return this.testScore;}
+}
