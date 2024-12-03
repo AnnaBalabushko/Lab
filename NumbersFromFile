@@ -1,0 +1,73 @@
+
+/*
+Author: Anna Balabushko
+Module 14: Assignment - Chapter 11
+Write a program that will search a text file of strings representing numbers of type int and will write the following to the screen:
+ -a count of integers in the file
+ -largest integer in the file
+ -smallest integer in the file
+ -average of the integers in the file
+ -sum of all integers in the file
+*/
+import java.util.*;
+import java.io.*;
+public class NumbersFromFile
+{
+	public static void main(String args[])
+	{
+		int countNum=0,lNum,sNum;
+      float average,sum = 0;
+		int currentNum;
+		Scanner scFile = null;
+		try
+		{
+         
+			scFile = new Scanner(new FileInputStream("numbers.txt"));
+         lNum = Integer.parseInt(scFile.nextLine());
+		   sNum = lNum;
+         sum = sum + lNum;
+		   while(scFile.hasNextLine())
+		   {	
+            
+            countNum++;
+			   currentNum = Integer.parseInt(scFile.nextLine());
+            
+			   if(sNum > currentNum)
+				   sNum = currentNum;
+			   if(lNum < currentNum)
+				   lNum = currentNum;
+            
+            sum = sum + currentNum;
+		   }
+        
+         countNum = countNum + 1;
+         
+         average = sum / countNum;
+         
+         System.out.println("Count of integers in the file: " + countNum);
+         System.out.println("Smallest Integer in the file: " + sNum);
+		   System.out.println("Largest Integer in the file: " + lNum);
+         System.out.println("Average of the integers in the file: " + average);
+         System.out.println("Sum of all integers in the file: " + sum);
+
+		}
+		catch(FileNotFoundException e)
+		{
+			System.out.println("Error: file was not found.");
+		}
+		catch(NumberFormatException e)
+      {
+         System.out.println("Error: A line contains more than one int or it contains a String");
+      }
+      catch (NoSuchElementException e)
+      {
+         System.out.println("Error: file was Empty");  
+      }
+      finally
+      {
+         
+         scFile.close();
+         System.out.print("File was closed");
+      }			
+	}
+}
