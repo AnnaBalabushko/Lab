@@ -872,7 +872,8 @@ ________________________________________________________________________________
 exploit
 # Exploit Payload Sender
 
-This Python script is designed to send reverse shell payloads to a target system, allowing you to exploit a vulnerable service on that system. The script supports three types of payloads: Python, Netcat, and Bash. After executing, the script attempts to establish a reverse shell connection from the target back to your local machine.
+This is a python version of a metasploit module that exploits a known vulnerability in UnrealIRCd 3.2.8.1.
+It is designed to send reverse shell payloads to a target system, allowing you to exploit a vulnerable service on that system. The script supports three types of payloads: Python, Netcat, and Bash. After executing, the script attempts to establish a reverse shell connection from the target back to your local machine.
 
 
 ## Overview
