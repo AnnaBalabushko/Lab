@@ -1,0 +1,193 @@
+
+/*
+Author: Anna Balabushko
+Module 13: Assignment - Chapter 10
+Create a main method within Payment that creates at least two CashPayment and two CreditCardPayment objects with different values and payment amounts. Call toString() methods from each object to print the details of each payment.
+*/
+import java.util.Scanner;
+
+public class MyPayments {
+
+   public static void main(String[] args)
+{
+   Scanner scanner = new Scanner(System.in);
+
+
+   CreditCardPayment creditCardPayment = new CreditCardPayment();
+   CashPayment cashPayment = new CashPayment();
+
+   System.out.println("Name: " + creditCardPayment.getName());
+   System.out.println("Card Number: " + Long.toString(creditCardPayment.getNumber()));
+   System.out.println("Expiration Date: " + Integer.toString(creditCardPayment.getMonth())
+   + "/" + Integer.toString(creditCardPayment.getYear()));
+   System.out.println("Payment amount: " + Double.toString(creditCardPayment.getPayment()));
+
+   System.out.print("Enter the amount you'd like to pay: ");
+   creditCardPayment.setPayment(scanner.nextDouble());
+   System.out.print("Enter the amount you'd like to pay (in cash): ");
+   cashPayment.setPayment(scanner.nextDouble());
+
+
+   System.out.println("The amount you entered was: " + cashPayment.getPayment());
+
+   cashPayment.paymentDetails();
+
+   System.out.print("Enter the amount you'd like to pay (in cash): ");
+
+
+   CashPayment cashPayment2 = new CashPayment(scanner.nextDouble());
+
+   cashPayment2.paymentDetails();
+
+   System.out.print("Enter the expiration month: ");
+   creditCardPayment.setMonth(scanner.nextInt());
+   
+   System.out.print("Enter the expiration year: ");
+   creditCardPayment.setYear(scanner.nextInt());
+   
+   System.out.print("Enter the card holder's name: ");
+   scanner.nextLine();
+   creditCardPayment.setName(scanner.nextLine());
+   
+   System.out.print("Enter the card number (16 digits): ");
+   creditCardPayment.setNumber(scanner.nextLong());
+
+
+
+   creditCardPayment.paymentDetails();
+
+   int month, year;
+   long number;
+   double payment;
+
+   System.out.print("Enter the payment amount: ");
+   payment = scanner.nextDouble();
+
+   System.out.print("Enter the card number: ");
+   number = scanner.nextLong();
+
+   System.out.print("Enter the expiration month: ");
+   month = scanner.nextInt();
+
+   System.out.print("Enter the expiration year: ");
+   year = scanner.nextInt();
+
+   System.out.print("Enter the cardholder name: ");
+   scanner.nextLine(); 
+   String name = scanner.nextLine();
+
+   CreditCardPayment creditCardPayment1 = new CreditCardPayment(month, year, name, number);
+   creditCardPayment1.setPayment(payment);
+
+   creditCardPayment1.paymentDetails();
+   }
+
+}
+
+
+class Payment{
+   protected double payment;
+
+   public Payment(){
+      payment = 0;
+   }
+
+   public double getPayment(){
+      return payment;
+   }
+
+   public void setPayment(double payment){
+      this.payment = payment;
+   }
+
+   public void paymentDetails(){
+      System.out.println("The current payment amount is: $" + Double.toString(payment));
+   }
+}
+
+class CreditCardPayment extends Payment{
+   private int expirymonth, expiryyear;
+
+   private long cardNumber;
+
+   private String name;
+
+   CreditCardPayment(){
+      expirymonth = 01; expiryyear = 57;
+      cardNumber = 1111111111111111L; name = "Not Defined";
+   }
+
+   CreditCardPayment(int expiryMonth, int expiryYear, String name, long cardNumber){
+      this.expirymonth = expiryMonth; this.expiryyear = expiryYear;
+      this.cardNumber = cardNumber; this.name = name;
+   }
+
+   public void setExpire(int ex_month, int ex_year){
+      this.expirymonth = ex_month; this.expiryyear = ex_year;
+   }
+
+   public void setMonth(int ex_month){
+      this.expirymonth = ex_month;
+   }
+
+   public void setYear(int ex_year){
+      this.expiryyear = ex_year;
+   }
+
+   public void setName(String name){
+      this.name = name;
+   }
+
+   public void setNumber(long card_num){
+      this.cardNumber = card_num;
+   }
+
+   public long getNumber(){
+      return cardNumber;
+   }
+
+   public String getNumberFormat(){
+      String s = Long.toString(cardNumber);
+      String r = s.substring(0,4) + " " + s.substring(4,8) + " " + s.substring(8,12) + " " + s.substring(12,16);
+      return r;
+   }
+
+   public String getExpire(){
+      return Integer.toString(expirymonth) + "/" + Integer.toString(expiryyear);
+   }
+
+   public String getName(){
+      return name;
+   }
+
+   public int getMonth(){
+      return expirymonth;
+   }
+
+   public int getYear(){
+      return expiryyear;
+   }
+
+
+   public void paymentDetails(){
+      System.out.println("Name on card: " + name);
+      System.out.println("Card Number: " + getNumberFormat());
+      System.out.println("Expiration date: " + getExpire());
+      System.out.println("Payment amount: " + getPayment());
+   }
+}
+
+
+class CashPayment extends Payment{
+   public CashPayment(){
+      payment = 0;
+   }
+
+   public CashPayment(double payment){
+      this.payment = payment;
+   }
+
+   public void paymentDetails(){
+      System.out.println("The current payment amount is: $" + Double.toString(payment) + " in cash.");
+   }
+}
